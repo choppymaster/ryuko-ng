@@ -533,6 +533,22 @@ class Mod(Cog):
             f" {role} from {target.mention}"
             f"\n🔗 __Jump__: <{ctx.message.jump_url}>"
         )
+    
+    @commands.guild_only()
+    @commands.command(aliases=["giverole"])
+    async def addrole(self, ctx, member: discord.Member, role: discord.Role):
+      """Adds a role to a member. Staff only."""
+
+      await member.add_roles(role)
+      await ctx.send(f"Role {role.name} added to {member.mention}.")
+
+    @commands.guild_only()
+    @commands.command(aliases=["takerole"])
+    async def removerole(self, ctx, member: discord.Member, role: discord.Role):
+      """Removes a role from a member. Staff only."""
+
+      await member.remove_roles(role)
+      await ctx.send(f"Role {role.name} removed from {member.mention}.")
 
     @commands.guild_only()
     @commands.check(check_if_staff)
