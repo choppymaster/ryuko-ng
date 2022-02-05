@@ -564,7 +564,8 @@ class Mod(Cog):
         f"by {ctx.message.author}."
       )
 
-    @commands.guild_only()
+    @commands.guild_only() 
+    @commands.check(check_if_staff)
     @commands.command(aliases=["clear"])
     async def purge(self, ctx, limit: int, channel: discord.TextChannel = None):
         """Clears a given number of messages, staff only."""
