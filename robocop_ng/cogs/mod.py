@@ -535,20 +535,30 @@ class Mod(Cog):
         )
 
     @commands.guild_only()
-    @commands.command(aliases=["giverole"])
+    @commands.check(check_if_staff)    @commands.command(aliases=["giverole"])
     async def addrole(self, ctx, member: discord.Member, role: discord.Role):
       """Adds a role to a member. Staff only."""
 
       await member.add_roles(role)
-      await ctx.send(f"Role {role.name} added to {member.mention}.")
+      await ctx.send(f"Role {role.name} is added to {member.mention}.")
 
+      await log_channel.send(
+        f"R✅️ ole '{role.name}' have been added to {member.mention},"
+        f"by {ctx.message.author}."
+      )
+      
     @commands.guild_only()
-    @commands.command(aliases=["takerole"])
+     @commands.check(check_if_staff)  @commands.command(aliases=["takerole"])
     async def removerole(self, ctx, member: discord.Member, role: discord.Role):
       """Removes a role from a member. Staff only."""
 
       await member.remove_roles(role)
-      await ctx.send(f"Role {role.name} removed from {member.mention}.")
+      await ctx.send(f"Role {role.name} is removed from {member.mention}.")
+
+      await log_channel.send(
+        f"Rol❌️ e '{role.name}' have been removed to {member.mention},"
+        f"by {ctx.message.author}."
+      )
 
     @commands.guild_only()
     @commands.check(check_if_staff)
