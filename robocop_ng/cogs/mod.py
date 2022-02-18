@@ -535,7 +535,9 @@ class Mod(Cog):
         )
 
     @commands.guild_only()
-    @commands.check(check_if_staff)
+    @commands.has_permissions(manage_roles=True)
+    @commands.bot_has_permissions(manage_roles=True)
+    #@commands.check(check_if_staff)
     @commands.command(aliases=["giverole"])
     async def addrole(self, ctx, member: discord.Member, role: discord.Role):
       """Adds a role to a member. Staff only."""
@@ -550,7 +552,9 @@ class Mod(Cog):
       )
       
     @commands.guild_only()  
-    @commands.check(check_if_staff) 
+    @commands.has_permissions(manage_roles=True)
+    @commands.bot_has_permissions(manage_roles=True)
+    #@commands.check(check_if_staff) 
     @commands.command(aliases=["takerole"])
     async def removerole(self, ctx, member: discord.Member, role: discord.Role):
       """Removes a role from a member. Staff only."""
@@ -560,7 +564,7 @@ class Mod(Cog):
       
       log_channel = self.bot.get_channel(config.modlog_channel)
       await log_channel.send(
-        f"❌️ Role '{role.name}' have been removed to {member},"
+        f"❌️ Role '{role.name}' have been removed from {member},"
         f"by {ctx.message.author}."
       )
 
