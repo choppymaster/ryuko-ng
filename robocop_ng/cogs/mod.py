@@ -537,10 +537,15 @@ class Mod(Cog):
     @commands.guild_only()
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
-    #@commands.check(check_if_staff)
     @commands.command(aliases=["giverole"])
     async def addrole(self, ctx, member: discord.Member, role: discord.Role):
       """Adds a role to a member. Staff only."""
+
+      author_top_role = ctx.author.roles.reverse()[0]
+      target_top_role = member.roles.reverse()[0]
+
+      if author_top_role.position < target_top_role.position or author_top_role.position < role.position:
+        return await ctx.send("This action can't be done because of role hierarchy.")
 
       await member.add_roles(role)
       await ctx.send(f"Role {role.name} is added to {member.mention}.")
@@ -554,11 +559,16 @@ class Mod(Cog):
     @commands.guild_only()  
     @commands.has_permissions(manage_roles=True)
     @commands.bot_has_permissions(manage_roles=True)
-    #@commands.check(check_if_staff) 
     @commands.command(aliases=["takerole"])
     async def removerole(self, ctx, member: discord.Member, role: discord.Role):
       """Removes a role from a member. Staff only."""
 
+      author_top_role = ctx.author.roles.reverse()[0]
+      target_top_role = member.roles.reverse()[0]
+
+      if author_top_role.position < target_top_role.position or author_top_role.position < role.position:
+        return await ctx.send("This action can't be done because of role hierarchy.")
+        
       await member.remove_roles(role)
       await ctx.send(f"Role {role.name} is removed from {member.mention}.")
       
